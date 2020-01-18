@@ -20,7 +20,19 @@ function loadSummary(request, response) {
 }   
 
 function searchMovies(request, response) {
-    response.send("ok");
+    axios.get(`${MOVIES_API}/search/movie`, {
+        params: {
+            api_key: process.env.MOVIES_API_KEY,
+            query: request.query.query
+        }
+    })
+    .then(({ status, data }) => 
+        response.status(status).json({
+            ...data,
+            results: data.results.map(movieMapper.mapResume)
+        })
+    )
+    .catch(defaultErrorHandler(response));
 }
 
 function loadDetails(request, response) {
