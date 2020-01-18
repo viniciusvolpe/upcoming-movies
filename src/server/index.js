@@ -12,3 +12,5 @@ const app = express();
 app.use(express.static('dist'));
 routes(app);
 app.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));
+
+module.exports = app;
