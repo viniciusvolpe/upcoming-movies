@@ -9,7 +9,7 @@
     "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
     "server": "nodemon src/server/index.js",
     "dev": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run client\"",
-    "test": "jest"
+    "test": "cross-env NODE_ENV=development jest --watch"
   },
   "author": "Vinicius Volpe",
   "license": "ISC",
@@ -48,6 +48,7 @@
   "devDependencies": {
     "babel-polyfill": "^6.26.0",
     "jest": "^24.9.0",
+    "redis-mock": "^0.47.0",
     "supertest": "^4.0.2"
   },
   "jest": {
