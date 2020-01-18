@@ -1,6 +1,7 @@
 const axios = require("axios");
 const { MOVIES_API } = require("../constants/api_urls");
 const movieMapper = require("../workers/movie_mapper");
+const defaultErrorHandler = require("../helpers/defaultErrorHandler");
 
 function loadSummary(request, response) {
     axios.get(`${MOVIES_API}/movie/upcoming`, {
@@ -15,11 +16,8 @@ function loadSummary(request, response) {
             results: data.results.map(movieMapper.mapResume)
         })
     )
-    .catch(error => {
-        const { response: { status = 500 } = {} } = error;
-        response.status(status).send(error)
-    });
-}
+    .catch(defaultErrorHandler(response));
+}   
 
 function searchMovies(request, response) {
     response.send("ok");
