@@ -8,12 +8,13 @@
     "start": "npm run build && node src/server/index.js",
     "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
     "server": "nodemon src/server/index.js",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Vinicius Volpe",
   "license": "ISC",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
+    "dotenv": "^8.2.0",
     "express": "^4.16.3",
     "react": "^16.5.2",
     "react-dom": "^16.5.2"
@@ -27,6 +28,7 @@
     "babel-loader": "^8.0.0",
     "clean-webpack-plugin": "^1.0.0",
     "concurrently": "^4.0.0",
+    "cross-env": "^6.0.3",
     "css-loader": "^2.0.0",
     "eslint": "^5.0.0",
     "eslint-config-airbnb": "^17.0.0",
