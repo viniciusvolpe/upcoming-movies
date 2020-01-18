@@ -36,7 +36,15 @@ function searchMovies(request, response) {
 }
 
 function loadDetails(request, response) {
-    response.send("ok");
+    axios.get(`${MOVIES_API}/movie/${request.params.id}`, {
+        params: {
+            api_key: process.env.MOVIES_API_KEY
+        }
+    })
+    .then(({ status, data }) => 
+        response.status(status).json(movieMapper.mapDetails(data))
+    )
+    .catch(defaultErrorHandler(response));
 }
 
 module.exports = {
