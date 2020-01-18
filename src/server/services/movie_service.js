@@ -7,7 +7,7 @@ function loadSummary(request, response) {
     axios.get(`${MOVIES_API}/movie/upcoming`, {
         params: {
             api_key: process.env.MOVIES_API_KEY,
-            page: request.params.page
+            page: request.query.page
         }
     })
     .then(({ status, data }) => 
