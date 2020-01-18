@@ -1,9 +1,12 @@
 const express = require('express');
 const dotenv = require("dotenv");
-const routes = require("./routes")
+const routes = require("./routes");
+const genreInitialier = require("./workers/genre_initializer")
 
 if(process.env.NODE_ENV === 'development')
     dotenv.config();
+
+genreInitialier();
 
 const app = express();
 app.use(express.static('dist'));
