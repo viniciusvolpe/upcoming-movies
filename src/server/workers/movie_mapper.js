@@ -1,3 +1,4 @@
+const moment = require("moment");
 const { IMAGE_API } = require("../constants/api_urls");
 const genreDAO = require("../database/genre_dao");
 
@@ -9,7 +10,7 @@ async function mapResume(movie) {
         poster: `${IMAGE_API}/${movie.poster_path}`,
         backdrop: `${IMAGE_API}/${movie.backdrop_path}`,
         genre: genres.join(", "),
-        releaseDate: movie.release_date
+        releaseDate: moment(movie.release_date, "yyyy-MM-dd").format("LL")
     }
 }
 

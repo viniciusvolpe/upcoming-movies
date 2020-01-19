@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const HeaderDiv = styled.div`
-  width: 100%;
+const HeaderDiv = styled.header`
   background-color: #282c34;
   color: #ffffff;
   padding: 20px;
@@ -10,7 +9,7 @@ const HeaderDiv = styled.div`
 `;
 
 const MainTitle = styled.h1`
-  font-size: bold;
+  font-weight: bold;
 `;
 
 const Subtitle = styled.h3`
