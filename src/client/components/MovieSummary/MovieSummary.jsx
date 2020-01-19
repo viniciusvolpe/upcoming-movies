@@ -26,10 +26,16 @@ const Subtitle = styled.p`
 const formatName = name =>
   name.length <= 30 ? name : `${name.substring(0, 30)}...`;
 
+const handleImageError = event => {
+  const defaultImage = "/public/default_movie_image.png";
+  event.target.onerror = null;
+  if (event.target.src != defaultImage) event.target.src = defaultImage;
+};
+
 const MovieSummary = ({ movie }) => {
   return (
     <Card>
-      <Img src={movie.poster} />
+      <Img src={movie.poster} onError={handleImageError} />
       <InfoContainer>
         <Title>
           {formatName(movie.name)}

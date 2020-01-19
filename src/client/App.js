@@ -4,6 +4,7 @@ import "./app.css";
 import Header from "./components/Header";
 import FilterInput from "./components/FilterInput";
 import MovieList from "./components/MovieList";
+import LoadMore from "./components/LoadMore";
 
 const initialState = {
   movies: [],
@@ -14,6 +15,7 @@ const initialState = {
 
 const ACTIONS = {
   SUMMARY: "summary",
+  LOAD_MORE: "loadMore",
 };
 
 function reducer(state, action) {
@@ -32,6 +34,12 @@ function reducer(state, action) {
         total,
         pageCount,
       };
+    case ACTIONS.LOAD_MORE:
+      return {
+        ...state,
+        movies: [...state.movies, ...action.payload.results],
+        page: action.payload.page,
+      };
     default:
       return state;
   }
@@ -40,20 +48,28 @@ function reducer(state, action) {
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  useEffect(() => {
+  const loadMovies = (page, type = ACTIONS.SUMMARY) => {
     axios
       .get("/api/movies", {
-        params: { page: state.page },
+        params: { page },
       })
-      .then(({ data }) => dispatch({ payload: data, type: ACTIONS.SUMMARY }));
+      .then(({ data }) => dispatch({ payload: data, type }));
+  };
+
+  const loadMore = () => {
+    loadMovies(state.page + 1, ACTIONS.LOAD_MORE);
+  };
+
+  useEffect(() => {
+    loadMovies();
   }, []);
 
   return (
     <>
       <Header />
       <FilterInput />
-      {console.log(state)}
       <MovieList movies={state.movies} total={state.total} />
+      {state.page < state.pageCount && <LoadMore loadMore={loadMore} />}
     </>
   );
 }
