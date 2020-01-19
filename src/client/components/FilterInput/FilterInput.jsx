@@ -16,12 +16,28 @@ const Input = styled.input`
   border: 0;
 `;
 
-const FilterInput = () => {
+const FilterInput = ({ onChange }) => {
   const [filter, setFilter] = useState();
+
   const handleInputChange = event => setFilter(event.target.value);
+
+  const handleSubimit = event => {
+    event.preventDefault();
+    if (filter) {
+      onChange(filter);
+      setFilter("");
+    }
+  };
+
   return (
     <Container>
-      <Input placeholder="Search for a movie" onChange={handleInputChange} />
+      <form onSubmit={handleSubimit}>
+        <Input
+          placeholder="Type a movie name and press Enter"
+          onChange={handleInputChange}
+          value={filter}
+        />
+      </form>
     </Container>
   );
 };

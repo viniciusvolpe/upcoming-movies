@@ -23,7 +23,8 @@ function loadSummary(request, response) {
 function searchMovies(request, response) {
     callSummaryApi({ response, path: "/search/movie", params: {
         api_key: process.env.MOVIES_API_KEY,
-        query: request.query.query
+        query: request.query.query,
+        page: request.query.page
     }})
 }
 

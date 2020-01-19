@@ -5,17 +5,20 @@ import Header from "./components/Header";
 import FilterInput from "./components/FilterInput";
 import MovieList from "./components/MovieList";
 import LoadMore from "./components/LoadMore";
+import FilterLabel from "./components/FilterLabel";
 
 const initialState = {
   movies: [],
   page: null,
   total: 0,
   pageCount: 0,
+  query: "",
 };
 
 const ACTIONS = {
   SUMMARY: "summary",
   LOAD_MORE: "loadMore",
+  SEARCH: "search",
 };
 
 function reducer(state, action) {
@@ -26,6 +29,7 @@ function reducer(state, action) {
         page,
         total_results: total,
         total_pages: pageCount,
+        query,
       } = action.payload;
       return {
         ...state,
@@ -33,12 +37,22 @@ function reducer(state, action) {
         page,
         total,
         pageCount,
+        query,
       };
     case ACTIONS.LOAD_MORE:
       return {
         ...state,
         movies: [...state.movies, ...action.payload.results],
         page: action.payload.page,
+      };
+    case ACTIONS.SEARCH:
+      return {
+        ...state,
+        movies: action.payload.results,
+        page: action.payload.page,
+        total: action.payload.total_results,
+        pageCount: action.payload.total_pages,
+        query: action.payload.query,
       };
     default:
       return state;
@@ -48,16 +62,24 @@ function reducer(state, action) {
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const loadMovies = (page, type = ACTIONS.SUMMARY) => {
+  const loadMovies = ({ page, type = ACTIONS.SUMMARY, query } = {}) => {
     axios
-      .get("/api/movies", {
-        params: { page },
+      .get(`/api/movies${query ? "/search" : ""}`, {
+        params: { page, query },
       })
-      .then(({ data }) => dispatch({ payload: data, type }));
+      .then(({ data }) => dispatch({ payload: { ...data, query }, type }));
   };
 
   const loadMore = () => {
-    loadMovies(state.page + 1, ACTIONS.LOAD_MORE);
+    loadMovies({
+      page: state.page + 1,
+      query: state.query,
+      type: ACTIONS.LOAD_MORE,
+    });
+  };
+
+  const searchMovies = query => {
+    loadMovies({ query, type: ACTIONS.SEARCH });
   };
 
   useEffect(() => {
@@ -67,8 +89,14 @@ function App() {
   return (
     <>
       <Header />
-      <FilterInput />
-      <MovieList movies={state.movies} total={state.total} />
+      <FilterInput onChange={searchMovies} />
+      {state.query && <FilterLabel reset={loadMovies} query={state.query} />}
+      <MovieList
+        movies={state.movies}
+        total={state.total}
+        query={state.query}
+        resetFilter={loadMovies}
+      />
       {state.page < state.pageCount && <LoadMore loadMore={loadMore} />}
     </>
   );
