@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 import Card from "../Card";
+import Button from "../Button";
 
 const Img = styled.img`
   border-radius: 4px 0px 0px 4px;
@@ -33,6 +35,12 @@ const handleImageError = event => {
 };
 
 const MovieSummary = ({ movie }) => {
+  const history = useHistory();
+
+  const goToDetails = () => {
+    history.push("/movie");
+  };
+
   return (
     <Card>
       <Img src={movie.poster} onError={handleImageError} />
@@ -42,6 +50,9 @@ const MovieSummary = ({ movie }) => {
           <Subtitle>{movie.releaseDate}</Subtitle>
         </Title>
         <p>Genre: {movie.genre}</p>
+        <Button primary onClick={goToDetails}>
+          See details
+        </Button>
       </InfoContainer>
     </Card>
   );
