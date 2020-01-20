@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import Card from "../Card";
 import Button from "../Button";
+import Title from "../Title";
 
 const Img = styled.img`
   border-radius: 4px 0px 0px 4px;
@@ -12,17 +13,14 @@ const Img = styled.img`
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
 `;
 
-const Title = styled.p`
-  font-weight: bold;
-  font-size: xx-large;
-  line-height: 35px;
-`;
-
-const Subtitle = styled.p`
+const Subtitle = styled.h2`
   font-weight: normal;
   font-size: large;
+  margin-top: 10px;
+  margin-bottom: 0px;
 `;
 
 const formatName = name =>
@@ -38,7 +36,7 @@ const MovieSummary = ({ movie }) => {
   const history = useHistory();
 
   const goToDetails = () => {
-    history.push("/movie");
+    history.push(`/movie/${movie.id}`);
   };
 
   return (

@@ -2,7 +2,8 @@ import React from "react";
 import "./app.css";
 import Header from "./components/Header";
 import Home from "./pages/Home";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import MovieDetail from "./pages/MovieDetail";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
@@ -11,6 +12,9 @@ function App() {
       <Switch>
         <Route exact path="/">
           <Home />
+        </Route>
+        <Route path="/movie/:id">
+          <MovieDetail />
         </Route>
       </Switch>
     </Router>
