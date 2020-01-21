@@ -18,7 +18,7 @@ const FilterLabel = ({ query, reset }) => {
   return (
     <Label>
       <ResetLink onClick={() => reset()}>Movies</ResetLink>
-      {` > ${query}`}
+      <span>{` > ${query}`}</span>
     </Label>
   );
 };

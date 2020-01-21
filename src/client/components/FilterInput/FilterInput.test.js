@@ -19,14 +19,16 @@ describe("Header test suit", () => {
       render: { getByPlaceholderText },
     } = setup();
 
-    expect(getByPlaceholderText("Search for a movie")).toBeTruthy();
+    expect(
+      getByPlaceholderText("Type a movie name and press Enter")
+    ).toBeTruthy();
   });
 
   it("Should change filter input", () => {
     const {
       render: { getByPlaceholderText },
     } = setup();
-    const input = getByPlaceholderText("Search for a movie");
+    const input = getByPlaceholderText("Type a movie name and press Enter");
     fireEvent.change(input, {
       target: { value: "bad" },
     });
