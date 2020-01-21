@@ -1,15 +1,16 @@
 const express = require('express');
-const os = require('os');
 const dotenv = require("dotenv");
+const routes = require("./routes");
+const genreInitialier = require("./workers/genre_initializer")
 
 if(process.env.NODE_ENV === 'development')
     dotenv.config();
 
+genreInitialier();
+
 const app = express();
-
 app.use(express.static('dist'));
-app.get('/api/getUsername', (req, res) => res.send({ username: os.userInfo().username }));
-
+routes(app);
 app.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));
 
 module.exports = app;
