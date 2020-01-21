@@ -3,7 +3,7 @@ const { IMAGE_API } = require("../constants/api_urls");
 const genreDAO = require("../database/genre_dao");
 
 function formatDate(releaseDate) {
-    return moment(releaseDate, "yyyy-MM-dd").format("LL")
+    return moment(releaseDate, "YYYY-MM-dd").format("LL")
 }
 
 async function mapResume(movie) {
